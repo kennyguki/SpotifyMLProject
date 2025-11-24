@@ -20,7 +20,7 @@ X = df[audio_features]
 scaler = StandardScaler()
 X_scaled = scaler.fit_transform(X)
 
-# Train K-Means
+# Train K-Means (using 50 clusters)
 kmeans = KMeans(n_clusters=50, random_state=42)
 df['cluster'] = kmeans.fit_predict(X_scaled)
 

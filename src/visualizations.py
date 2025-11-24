@@ -18,19 +18,11 @@ audio_features = [
 "liveness", "valence", "tempo"
 ]
 
-# -----------------------------
-
-# Scale features for visualization
-
-# -----------------------------
-
 X_scaled = scaler.transform(df[audio_features])
 
-# -----------------------------
+# Visualizations (Note: AI generated and not 100% sure of importance)
 
 # 1. PCA projection (2D) using scaled features
-
-# -----------------------------
 
 pca = PCA(n_components=2)
 X_pca = pca.fit_transform(X_scaled)
@@ -43,11 +35,8 @@ plt.ylabel("PC2")
 plt.colorbar(label='Cluster')
 plt.show()
 
-# -----------------------------
 
 # 2. Scatter plot examples (optional: use scaled or original features)
-
-# -----------------------------
 
 plt.figure(figsize=(8,6))
 plt.scatter(X_scaled[:, audio_features.index('energy')],
@@ -67,11 +56,8 @@ plt.ylabel("Valence (scaled)")
 plt.title("Tempo vs Valence by Cluster (Scaled)")
 plt.show()
 
-# -----------------------------
 
-# 3. Number of songs per cluster
-
-# -----------------------------
+# Number of songs per cluster
 
 df['cluster'].value_counts().sort_index().plot(kind='bar', figsize=(10,4))
 plt.title("Number of Songs per Cluster")
@@ -79,11 +65,8 @@ plt.xlabel("Cluster")
 plt.ylabel("Count")
 plt.show()
 
-# -----------------------------
+# Cluster centroids heatmap (scaled features)
 
-# 4. Cluster centroids heatmap (scaled features)
-
-# -----------------------------
 
 cluster_centers_scaled = np.zeros((df['cluster'].nunique(), X_scaled.shape[1]))
 for i in range(df['cluster'].nunique()):
