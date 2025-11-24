@@ -21,7 +21,7 @@ scaler = StandardScaler()
 X_scaled = scaler.fit_transform(X)
 
 # Train K-Means
-kmeans = KMeans(n_clusters=10, random_state=42)
+kmeans = KMeans(n_clusters=50, random_state=42)
 df['cluster'] = kmeans.fit_predict(X_scaled)
 
 # Save clustered dataset
