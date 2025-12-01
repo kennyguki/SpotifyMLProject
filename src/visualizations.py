@@ -12,6 +12,7 @@ scaler = load("models/scaler.pkl")
 kmeans = load("models/kmeans.pkl")
 
 
+# Audio features used for clustering
 audio_features = [
 "danceability", "energy", "key", "loudness", "mode",
 "speechiness", "acousticness", "instrumentalness",
@@ -20,7 +21,7 @@ audio_features = [
 
 X_scaled = scaler.transform(df[audio_features])
 
-# Visualizations (Note: AI generated and not 100% sure of importance)
+# Useful visualizations
 
 # 1. PCA projection (2D) using scaled features
 
