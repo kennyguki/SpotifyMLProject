@@ -2,11 +2,14 @@ import streamlit as st
 import pandas as pd
 from joblib import load
 from recommenders import recommend_by_song
+import os
+
 
 # Load clustered dataset and models
 df = pd.read_csv("data/clustered_dataset.csv")
-scaler = load("models/scaler.pkl")
-kmeans = load("models/kmeans.pkl")
+BASE_DIR = os.path.dirname(__file__)
+scaler = load(os.path.join(BASE_DIR, "models/scaler.pkl"))
+kmeans = load(os.path.join(BASE_DIR, "models/kmeans.pkl"))
 
 st.set_page_config(page_title="Music Recommendation System", layout="wide")
 
@@ -31,7 +34,7 @@ st.sidebar.markdown(
     "💡 **Tip:** Try entering your favorite song and artist for a curated playlist!"
 )
 
-st.sidebar.markdown("---")
+st.sidebar.markdown("---") # Separator line
 
 st.sidebar.markdown("## 🔗 Useful Links")
 st.sidebar.markdown(
