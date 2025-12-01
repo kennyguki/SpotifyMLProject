@@ -20,7 +20,7 @@ kmeans = load(kmeans_path)
 st.set_page_config(page_title="Music Recommendation System", layout="wide")
 
 # Sidebar
-st.sidebar.image("data/spotify-logo-spotify-symbol-3.png", width="stretch")  # Updated parameter
+st.sidebar.image("data/spotify-logo-spotify-symbol-3.png", width='stretch')  # Updated parameter
 
 st.sidebar.markdown("## 🎧 About this App")
 st.sidebar.info(
@@ -106,6 +106,6 @@ if st.button("Get Recommendations"):
             )
             
             st.success("Recommended Songs 🎶")
-            st.dataframe(recs_display.reset_index(drop=True), use_container_width=True)
+            st.dataframe(recs_display.reset_index(drop=True), width='stretch')
     else:
         st.warning("Please enter both song name and artist.")

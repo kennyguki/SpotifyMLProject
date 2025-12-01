@@ -16,3 +16,5 @@ df = df.dropna()
 
 # Save cleaned dataset
 df.to_csv("data/cleaned_dataset.csv", index=False)
+
+df[df.duplicated()]

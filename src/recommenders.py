@@ -1,4 +1,5 @@
 import pandas as pd
+from sklearn.metrics import pairwise_distances
 
 def recommend_by_song(song_name, df, artist_name, popularity=None, n=10):
     if not artist_name:
@@ -17,7 +18,7 @@ def recommend_by_song(song_name, df, artist_name, popularity=None, n=10):
     if len(song_idx) == 0:
         return None
 
-    # Filter by artist (multiple artists supported)
+    # Filter by artist (supports multiple artists)
     def artist_matches(row_artists):
         return any(artist_name in a.strip() for a in row_artists.split(';'))
 
@@ -28,6 +29,8 @@ def recommend_by_song(song_name, df, artist_name, popularity=None, n=10):
     # Get first matched song
     song = df.loc[song_idx].iloc[0]
     cluster_id = song['cluster']
+
+    # Select songs in the same cluster
     cluster_songs = df[df['cluster'] == cluster_id]
 
     # Optional popularity filter
@@ -39,15 +42,31 @@ def recommend_by_song(song_name, df, artist_name, popularity=None, n=10):
         if cluster_songs.empty:
             return None
 
-    # Exclude the input song
+    # Exclude input song
     cluster_songs = cluster_songs[cluster_songs.index != song.name]
     if cluster_songs.empty:
         return None
 
-    recommendations = cluster_songs.sample(min(n, len(cluster_songs)))
+    # Remove duplicate songs
+    cluster_songs = cluster_songs.drop_duplicates(subset=['track_name', 'artists'])
 
-    # Format artists for nicer display
-    recommendations = recommendations.copy()
+    # Compute distances to input song using audio features
+    audio_features = [
+        "danceability", "energy", "key", "loudness", "mode",
+        "speechiness", "acousticness", "instrumentalness",
+        "liveness", "valence", "tempo"
+    ]
+    song_features = song[audio_features].values.reshape(1, -1)
+    cluster_features = cluster_songs[audio_features].values
+
+    distances = pairwise_distances(song_features, cluster_features, metric='euclidean').flatten()
+
+    # Select top n closest songs
+    cluster_songs = cluster_songs.copy()
+    cluster_songs['distance'] = distances
+    recommendations = cluster_songs.nsmallest(n, 'distance')
+
+    # Format artists nicely
     recommendations['artists'] = recommendations['artists'].str.replace(';', ', ')
 
     return recommendations[['track_name', 'artists', 'album_name', 'popularity']]
