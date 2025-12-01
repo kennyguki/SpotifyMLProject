@@ -7,11 +7,15 @@ import os
 
 # Load clustered dataset and models
 df = pd.read_csv("data/clustered_dataset.csv")
+
 BASE_DIR = os.path.dirname(__file__)
 MODELS_DIR = os.path.join(BASE_DIR, "..", "models")  # go up one level
 
-scaler = load(os.path.join(MODELS_DIR, "scaler.pkl"))
-kmeans = load(os.path.join(MODELS_DIR, "kmeans.pkl"))
+scaler_path = os.path.join(MODELS_DIR, "scaler.pkl")
+kmeans_path = os.path.join(MODELS_DIR, "kmeans.pkl")
+
+scaler = load(scaler_path)
+kmeans = load(kmeans_path)
 
 st.set_page_config(page_title="Music Recommendation System", layout="wide")
 
