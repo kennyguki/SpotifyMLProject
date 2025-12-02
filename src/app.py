@@ -47,7 +47,7 @@ st.sidebar.markdown(
     """
     - [Spotify](https://spotify.com)
     - [GitHub Repo](https://github.com/kennyguki/SpotifyMLProject)
-    - [Dataset](https://www.kaggle.com/datasets/solomonameh/spotify-music-dataset)  
+    - [Dataset](https://www.kaggle.com/datasets/priyamchoksi/spotify-dataset-114k-songs)  
     - [LinkedIn](https://www.linkedin.com/in/kennethgutierrezking/)  
     """
 )
